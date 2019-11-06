@@ -6,12 +6,12 @@ namespace TaskManager.ViewModels
 {
     public class HomeViewModel : IViewModel
     {
-        private IUserService _userService;
-        public HomeViewModel(IUserService userService)
-        {
-            Users = userService.GetAll().ConfigureAwait(true).GetAwaiter().GetResult();
-        }
+        //private IUserService _userService;
+        //public HomeViewModel(IUserService userService)
+        //{
+        //    Users = userService.GetAll().ConfigureAwait(true).GetAwaiter().GetResult();
+        //}
 
-        public IList<User> Users { get; set; }
+        public IList<TaskToDo> Tasks{ get; set; }
     }
 }

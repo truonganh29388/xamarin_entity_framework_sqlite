@@ -16,38 +16,30 @@ namespace TaskManager.Database
         }
         public async Task SeedAsync()
         {
-            if(!await _context.Users.AnyAsync())
+            #region seed Task Categories
+
+            if (!await _context.Categories.AnyAsync())
             {
-                var users = new List<User>
+                var categories = new List<TaskCategory>
                 {
-                    new User
+                    new TaskCategory
                     {
-                        FullName = "John Doe",
-                        UserName = "johndoe@email.com",
-                        Password = "Password!!"
+                        Name = "Call"
                     },
-                     new User
+                    new TaskCategory
                     {
-                        FullName = "John Doe 2",
-                        UserName = "johndoe2@email.com",
-                        Password = "Password!!"
+                        Name = "Email"
                     },
-                      new User
+                     new TaskCategory
                     {
-                        FullName = "John Doe 3",
-                        UserName = "johndoe3@email.com",
-                        Password = "Password!!"
+                        Name = "Do"
                     },
-                       new User
-                    {
-                        FullName = "John Doe 4",
-                        UserName = "johndoe4@email.com",
-                        Password = "Password!!"
-                    }
                 };
-                await _context.Users.AddRangeAsync(users);
+                await _context.Categories.AddRangeAsync(categories);
                 await _context.SaveChangesAsync();
             }
+
+            #endregion
         }
     }
 }

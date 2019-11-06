@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using TaskManager.Droid.Services;
 using TaskManager.IocContainer;
+using TaskManager.Services;
 
 namespace TaskManager.Droid
 {
@@ -7,6 +9,7 @@ namespace TaskManager.Droid
     {
         protected override void RegisterDependencies(ContainerBuilder cb)
         {
+            cb.RegisterType<OtpService>().As<IOtpService>();
             base.RegisterDependencies(cb);
         }
     }

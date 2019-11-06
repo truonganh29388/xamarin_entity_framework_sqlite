@@ -20,10 +20,10 @@ namespace TaskManager.IocContainer
             cb.RegisterType<ApplicationContext>();
             cb.RegisterType<UnitOfWork<ApplicationContext>>().As<IUnitOfWork>();
             cb.RegisterType<DatabaseInitializer>().As<IDatabaseInitializer>();
-            cb.RegisterType<UserService>().As<IUserService>();
 
             // Register View Models
             cb.RegisterType<HomeViewModel>().SingleInstance();
+            cb.RegisterType<LoginViewModel>().SingleInstance();
         }
     }
 }

@@ -6,7 +6,8 @@ namespace TaskManager.EntityFramework.Database
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<TaskCategory> Categories { get; set; }
+        public DbSet<TaskToDo> Tasks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
