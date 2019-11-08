@@ -11,11 +11,13 @@ namespace TaskManager.Pages
     public class LoginPage : ViewPage<LoginViewModel>
     {
         private readonly IOtpService _optService;
+        private readonly INotifier _notifier;
         public LoginPage()
         {
             using(var scope = AppContainer.Container.BeginLifetimeScope())
             {
                 _optService = AppContainer.Container.Resolve<IOtpService>();
+                _notifier = AppContainer.Container.Resolve<INotifier>();
             }
 
             // Build the page.
@@ -55,7 +57,12 @@ namespace TaskManager.Pages
         private void SendOtp(object sender, EventArgs args)
         {
             var phone = ViewModel.PhoneNumber;
-            _optService.SendOtp(phone);
+
+          //  _optService.SendOtp(phone);
+            _notifier.NotifyOtpFailure(phone, "Test")
+                .ConfigureAwait(true)
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }

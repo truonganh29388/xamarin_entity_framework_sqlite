@@ -1,16 +1,19 @@
-﻿using Firebase;
+﻿using Autofac;
+using Firebase;
 using Firebase.Auth;
 using Java.Util.Concurrent;
 using System;
+using TaskManager.IocContainer;
 using TaskManager.Services;
 
 namespace TaskManager.Droid.Services
 {
     public class OtpService : IOtpService
     {
+     
         public bool SendOtp(string phoneNumber)
         {
-            var phoneAuthCallbacks = new PhoneAuthCallbacks();
+            var phoneAuthCallbacks = new PhoneAuthCallbacks(phoneNumber);
             try
             {
                 PhoneAuthProvider.Instance.VerifyPhoneNumber(phoneNumber, 60, TimeUnit.Seconds, MainActivity.CurrentActivityRef, phoneAuthCallbacks);
@@ -26,6 +29,14 @@ namespace TaskManager.Droid.Services
 
      public class PhoneAuthCallbacks : PhoneAuthProvider.OnVerificationStateChangedCallbacks
     {
+        private readonly INotifier _notifier;
+        private readonly string _phoneNumber;
+        public PhoneAuthCallbacks(string phoneNumber)
+        {
+            _phoneNumber = phoneNumber;
+            _notifier = AppContainer.Container.Resolve<INotifier>();
+        }
+
         public override void OnVerificationCompleted(PhoneAuthCredential credential)
         {
             var cre = credential;
@@ -47,7 +58,7 @@ namespace TaskManager.Droid.Services
 
         public override void OnVerificationFailed(FirebaseException exception)
         {
-            var ex = exception;
+            _notifier.NotifyOtpFailure(_phoneNumber, exception.Message).ConfigureAwait(true).GetAwaiter().GetResult();
         }
     }
 }

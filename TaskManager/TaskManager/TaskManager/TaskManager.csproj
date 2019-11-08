@@ -1,5 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Target Name="CopyConfigFiles" AfterTargets="Build">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)/Configurations-Source/$(Configuration)/config.json" DestinationFolder="$(MSBuildProjectDirectory)/Configurations/" />
+  </Target>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon />
@@ -21,11 +23,9 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="Dtos\" />
+    <EmbeddedResource Include="Configurations\config.json" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="Mono.Android">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
